@@ -4,12 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    app:layout_scrollFlags="scroll|enterAlways"
     tools:context="com.example.bottomnavigation.Main2Activity">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/songs"></ListView>
+
+
+
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context="com.example.myapplication.MainActivity"
+            tools:openDrawer="start">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#47A4EE"
+                    android:elevation="4dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                </androidx.appcompat.widget.Toolbar>
+
+
+                <ListView
+                    android:id="@+id/songs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ListView>
+
+
+            </LinearLayout>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                app:headerLayout="@layout/nav_header"
+                app:menu="@menu/drawer_menu" >
+
+            </com.google.android.material.navigation.NavigationView>
+
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="         "
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:id="@+id/filesNotFound"/>
+
+
+
 
 </RelativeLayout>

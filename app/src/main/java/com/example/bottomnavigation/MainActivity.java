@@ -50,10 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_message:
+            case R.id.nav_adhyaya:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Message()).commit();
                 startActivity(new Intent(MainActivity.this,Main2Activity.class));
+                finish();
                 break;
 
             case R.id.nav_chat:

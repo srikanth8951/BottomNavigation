@@ -45,6 +45,7 @@ public class PlayerActivity extends AppCompatActivity {
 
 
 
+
         updateseekBar = new Thread(){
             @Override
             public void run() {
@@ -120,6 +121,7 @@ public class PlayerActivity extends AppCompatActivity {
                 songSeekBar.setMax(myMediaPlayer.getDuration());
 
                 if (myMediaPlayer.isPlaying()){
+
                     btn_pause.setBackgroundResource(R.drawable.ic_play);
                     myMediaPlayer.pause();
                 }
@@ -137,7 +139,7 @@ public class PlayerActivity extends AppCompatActivity {
 
                 myMediaPlayer.stop();
                 myMediaPlayer.release();
-                position = ((position+1)&mySongs.size());
+                position = ((position+1)%mySongs.size());
 
                 Uri u = Uri.parse(mySongs.get(position).toString());
 
@@ -171,32 +173,7 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public boolean onOptionsItemSelected( MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             onBackPressed();
         }
