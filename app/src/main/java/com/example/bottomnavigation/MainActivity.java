@@ -8,8 +8,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         NavigationView navigationView=findViewById(R.id.nav_view);
@@ -39,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
+
 
     }
 
@@ -51,16 +53,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_message:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Message()).commit();
+                startActivity(new Intent(MainActivity.this,Main2Activity.class));
                 break;
 
             case R.id.nav_chat:
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new chat()).commit();
+
                 break;
 
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new profile()).commit();
+
                 break;
             case R.id.nav_share:
                 Toast.makeText(this,"share",Toast.LENGTH_SHORT).show();
@@ -86,27 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()){
-                        case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
-                            break;
-                        case R.id.nav_favorites:
-                            selectedFragment = new FavoriteFragment();
-                            break;
-                        case R.id.nav_search:
-                            selectedFragment = new SeachFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
-                    return true;
-                }
-            };
 
 
 }
