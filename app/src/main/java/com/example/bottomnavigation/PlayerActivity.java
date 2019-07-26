@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
 
-    Button btn_next,btn_previous,btn_pause;
+    Button btn_next, btn_previous, btn_pause;
     TextView songTextLine;
     SeekBar songSeekBar;
     String sname;
@@ -44,23 +44,20 @@ public class PlayerActivity extends AppCompatActivity {
         songSeekBar = findViewById(R.id.seekBar);
 
 
-
-
-        updateseekBar = new Thread(){
+        updateseekBar = new Thread() {
             @Override
             public void run() {
 
                 int totalDuration = myMediaPlayer.getDuration();
                 int currentPosition = 0;
 
-                while (currentPosition<totalDuration){
-                    try{
+                while (currentPosition < totalDuration) {
+                    try {
 
                         sleep(500);
                         currentPosition = myMediaPlayer.getCurrentPosition();
                         songSeekBar.setProgress(currentPosition);
-                    }
-                    catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -68,28 +65,28 @@ public class PlayerActivity extends AppCompatActivity {
             }
         };
 
-        if (myMediaPlayer!=null){
+        if (myMediaPlayer != null) {
             myMediaPlayer.stop();
             myMediaPlayer.release();
         }
 
-        Intent i= getIntent();
+        Intent i = getIntent();
         Bundle bundle = i.getExtras();
 
         mySongs = (ArrayList) bundle.getParcelableArrayList("songs");
 
 
         sname = mySongs.get(position).getName().toString();
-        String  songName = i.getStringExtra("songname");
+        String songName = i.getStringExtra("songname");
 
         songTextLine.setText(songName);
         songTextLine.setSelected(true);
 
-        position = bundle.getInt("pos",0);
+        position = bundle.getInt("pos", 0);
 
         Uri u = Uri.parse(mySongs.get(position).toString());
 
-        myMediaPlayer = MediaPlayer.create(getApplicationContext(),u);
+        myMediaPlayer = MediaPlayer.create(getApplicationContext(), u);
 
         myMediaPlayer.start();
         songSeekBar.setMax(myMediaPlayer.getDuration());
@@ -120,13 +117,11 @@ public class PlayerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 songSeekBar.setMax(myMediaPlayer.getDuration());
 
-                if (myMediaPlayer.isPlaying()){
+                if (myMediaPlayer.isPlaying()) {
 
                     btn_pause.setBackgroundResource(R.drawable.ic_play);
                     myMediaPlayer.pause();
-                }
-                else
-                {
+                } else {
                     btn_pause.setBackgroundResource(R.drawable.ic_pause);
                     myMediaPlayer.start();
                 }
@@ -139,11 +134,11 @@ public class PlayerActivity extends AppCompatActivity {
 
                 myMediaPlayer.stop();
                 myMediaPlayer.release();
-                position = ((position+1)%mySongs.size());
+                position = ((position + 1) % mySongs.size());
 
                 Uri u = Uri.parse(mySongs.get(position).toString());
 
-                myMediaPlayer = MediaPlayer.create(getApplicationContext(),u);
+                myMediaPlayer = MediaPlayer.create(getApplicationContext(), u);
 
                 sname = mySongs.get(position).getName().toString();
                 songTextLine.setText(sname);
@@ -159,9 +154,9 @@ public class PlayerActivity extends AppCompatActivity {
                 myMediaPlayer.stop();
                 myMediaPlayer.release();
 
-                position = ((position-1)<0)?(mySongs.size()-1):(position-1);
+                position = ((position - 1) < 0) ? (mySongs.size() - 1) : (position - 1);
                 Uri u = Uri.parse(mySongs.get(position).toString());
-                myMediaPlayer = MediaPlayer.create(getApplicationContext(),u);
+                myMediaPlayer = MediaPlayer.create(getApplicationContext(), u);
 
                 sname = mySongs.get(position).getName().toString();
                 songTextLine.setText(sname);
@@ -173,8 +168,8 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
 

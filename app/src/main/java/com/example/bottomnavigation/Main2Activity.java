@@ -105,7 +105,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         }catch (Exception e){
 
         }
-return arrayList;
+        return arrayList;
     }
 
     void display(){
