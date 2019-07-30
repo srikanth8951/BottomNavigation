@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (i=0;i<mysongs.size();i++){
             items[i] = mysongs.get(i).getName().toString().replace(".mp3","").replace(".wav","");
         }
-        if(i==0){
-            notFound = (TextView) findViewById(id.filesNotFound);
-            notFound.setText("No files found");
-        }
+ //       if(i==0){
+   //         notFound = (TextView) findViewById(id.filesNotFound);
+ //           notFound.setText("No files found");
+ //        }
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mysongs1);
         myListView.setAdapter(myAdapter);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 int id = getResources().getIdentifier(mysongs1.get(0),"raw",getOpPackageName());
                 startActivity(new Intent(getApplicationContext(),PlayerActivity.class)
-                        .putExtra("songs",mysongs1).putExtra("songname", "Haalu Jenu")
+                        .putExtra("songs",mysongs1).putExtra("songname", "haalu_jenu")
                         .putExtra("pos",id));
             }
         });
