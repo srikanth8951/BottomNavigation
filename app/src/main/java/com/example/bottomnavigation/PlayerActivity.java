@@ -62,13 +62,14 @@ public class PlayerActivity extends AppCompatActivity {
 
                 while (currentPosition < totalDuration) {
                     try {
-
                         sleep(500);
                         currentPosition = myMediaPlayer.getCurrentPosition();
                         songSeekBar.setProgress(currentPosition);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e){
                         e.printStackTrace();
                     }
+
                 }
 
             }
