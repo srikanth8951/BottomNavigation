@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
@@ -31,7 +32,10 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+import static com.example.bottomnavigation.R.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -39,22 +43,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ListView myListView;
     String[] items;
     TextView notFound;
-    int i = 0;
+    MediaPlayer player;
+    int i = 0,j=0;
     private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        myListView =  findViewById(R.id.songs);
+        setContentView(layout.activity_main);
+        myListView =  findViewById(id.songs);
         runtimePermissio();
 
-        drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(id.drawer_layout);
 
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        NavigationView navigationView=findViewById(R.id.nav_view);
+        Toolbar toolbar=findViewById(id.toolbar);
+        NavigationView navigationView=findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-                R.string.navigation_drawer_open,R.string.navigation_drawer_close );
+                string.navigation_drawer_open, string.navigation_drawer_close );
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -110,27 +115,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     void display(){
         final ArrayList<File> mysongs = findsong(Environment.getExternalStorageDirectory());
-
+        final ArrayList<String> mysongs1 = new ArrayList<String>();
         items = new String[mysongs.size()];
+
+        Field[] field = R.raw.class.getFields();
+        for(j=0;j<field.length;j++){
+            mysongs1.add(field[j].getName());
+        }
 
         for (i=0;i<mysongs.size();i++){
             items[i] = mysongs.get(i).getName().toString().replace(".mp3","").replace(".wav","");
         }
         if(i==0){
-            notFound = (TextView) findViewById(R.id.filesNotFound);
+            notFound = (TextView) findViewById(id.filesNotFound);
             notFound.setText("No files found");
         }
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mysongs1);
         myListView.setAdapter(myAdapter);
-
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String songName = myListView.getItemAtPosition(i).toString();
+//                String songName = myListView.getItemAtPosition(i).toString();
+                if(player != null ){
+                    player.release();
+                }
+                int id = getResources().getIdentifier(mysongs1.get(0),"raw",getOpPackageName());
                 startActivity(new Intent(getApplicationContext(),PlayerActivity.class)
-                        .putExtra("songs",mysongs).putExtra("songname",songName)
-                        .putExtra("pos",i));
+                        .putExtra("songs",mysongs1).putExtra("songname", "Haalu Jenu")
+                        .putExtra("pos",id));
             }
         });
     }
@@ -140,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_adhyaya:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+            case id.nav_adhyaya:
+                getSupportFragmentManager().beginTransaction().replace(id.fragment_container,
                         new Chapter1()).commit();
                 break;
         }

@@ -86,17 +86,19 @@ public class PlayerActivity extends AppCompatActivity {
         mySongs = (ArrayList) bundle.getParcelableArrayList("songs");
 
 
-        sname = mySongs.get(position).getName().toString();
+//        sname = mySongs.get(position).getName().toString();
         String songName = i.getStringExtra("songname");
 
         songTextLine.setText(songName);
         songTextLine.setSelected(true);
 
-        position = bundle.getInt("pos", 0);
+        int id = i.getIntExtra("pos",0);
 
-        Uri u = Uri.parse(mySongs.get(position).toString());
+//        position = bundle.getInt("pos", 0);
+//
+//        Uri u = Uri.parse(mySongs.toString());
 
-        myMediaPlayer = MediaPlayer.create(getApplicationContext(), u);
+        myMediaPlayer = MediaPlayer.create(getApplicationContext(),id);
 
         myMediaPlayer.start();
         songSeekBar.setMax(myMediaPlayer.getDuration());
